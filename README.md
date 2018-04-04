@@ -5,7 +5,7 @@
 
 ## dataFormat: 日期转换为指定格式的字符串
 ### @param {date} date 日期
-### @param {string} fmt 日期格式 yyyy-MM-dd HH:mm:ss
+#### @param {string} fmt 日期格式 yyyy-MM-dd HH:mm:ss
 
 dataIntelligentFormat: 日期智能转换为字符串
 @param {date} date 日期
