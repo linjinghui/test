@@ -1,6 +1,6 @@
 # 常用工具类汇总
 
-getUrlParamt: 获取地址栏参数
+##getUrlParamt: 获取地址栏参数
 @param {string} name - 参数名称
 
 dataFormat: 日期转换为指定格式的字符串
