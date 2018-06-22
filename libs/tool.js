@@ -630,7 +630,7 @@ export function formatUrl (url, paramObj) {
   for (var key in paramObj) {
     var value = paramObj[key];
     var symbol = url.indexOf('?') < 0 ? '?' : '&';
-    if (url.indexOf(key) < 0) {
+    if (url.indexOf('?' + key + '=') < 0 && url.indexOf('&' + key + '=') < 0) {
       url += symbol + key + '=' + value;
     }
   }
