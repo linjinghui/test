@@ -623,6 +623,21 @@ export function parseUrlStr (str) {
 }
 
 /**
+*组装地址栏Url
+*@paramObj - 地址栏参数对象
+*/
+export function formatUrl (url, paramObj) {
+  for (var key in paramObj) {
+    var value = paramObj[key];
+    var symbol = url.indexOf('?') < 0 ? '?' : '&';
+    if (url.indexOf(key) < 0) {
+      url += symbol + key + '=' + value;
+    }
+  }
+  return url;
+}
+
+/**
 *计算dom元素是否在可见范围之内
 */
 export function isVisible (dom, parantDom) {
