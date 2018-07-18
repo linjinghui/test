@@ -650,3 +650,11 @@ export function isVisible (dom, parantDom) {
   // console.log('(' + parantDom.scrollTop + '>=(' + dom.offsetTop + '+' + dom.offsetHeight + ') || (' + parantDom.scrollTop + '+' + parantDom.offsetHeight + ') <= (' + dom.offsetTop + '+' + dom.offsetHeight + '))');
   return result;
 }
+
+/**
+*是否为空
+*/
+export function isNull (data) {
+  var result = data + '';
+  return result === '{}' || result === '' || result === 'undefined' || result === 'null';
+}
