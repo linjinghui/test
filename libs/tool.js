@@ -658,3 +658,44 @@ export function isNull (data) {
   var result = data + '';
   return result === '{}' || result === '' || result === 'undefined' || result === 'null';
 }
+
+/**
+* 数组中2个元素位置对调
+*/
+export function arrSwap (arr, index1, index2) {
+  return arr.splice(index1, 1, ...arr.splice(index2, 1, arr[index1]));
+}
+
+/**
+* 数组中移动元素到指定位置
+* @param {int} moveInd - 目标位置下标
+* @param {int} moveToInd - 移动到指定位置下标
+* @param {int} isBeforAfter - 0：前面插入、1：后面插入（默认）
+*/
+export function moveArray (arr, moveInd, moveToInd, isBeforAfter) {
+  var item = arr.splice(moveInd, 1);
+  if (isBeforAfter === 0) {
+      moveToInd -= 1;
+  }
+  arr.splice(moveToInd, 0, item[0]);
+}
+
+/**
+* 监听元素子节点变化
+* @param {Dom} dom - 监听的目标 - document.getElementById(this.id)
+* @param {function} cbk - 回调
+*/
+export function addDomChildChange (dom, cbk) {
+  var callback = function (records) {
+    records.map(function (record) {
+      cbk && cbk();
+    });
+  };
+  var mo = new MutationObserver(callback);
+  var option = {
+    'childList': true,
+    'subtree': true
+  };
+
+  mo.observe(dom, option);
+}
