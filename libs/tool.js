@@ -21,7 +21,7 @@ export function getUrlParamt (name) {
 * @param {string} fmt 日期格式 yyyy-MM-dd HH:mm:ss
 */
 export function dataFormat (date, fmt) {
-  if (!date || !fmt) {
+  if (!date || (date + '' === 'Invalid Date') || !fmt) {
     return "";
   }
   var o = {
@@ -180,13 +180,21 @@ export function ssgDeleteData (key) {
 }
 
 /**
-* 保存数据到localStorage
+* 保存数据到localStorage, 可设置时间
 * @param {string} key 键
 * @param {object} data 值
+* @param {int} timeOut 超时时间，毫秒
 */
-export function lsgSaveData (key, data) {
+export function lsgSaveData (key, data, timeOut) {
   if (!key || !data) {
     return;
+  }
+  data = {
+    value: data
+  };
+  if (timeOut) {
+    data.time = new Date().getTime();
+    data.timeOut = timeOut;
   }
   data = JSON.stringify(data);
   localStorage.setItem(key, data);
@@ -200,8 +208,19 @@ export function lsgGetData (key) {
   if (!key) {
     return;
   }
-  var data = localStorage.getItem(key);
-  return JSON.parse(data);
+  var data = JSON.parse(localStorage.getItem(key));
+  if (data) {
+    var time = data.time;
+    var timeOut = data.timeOut;
+    if (timeOut && ((new Date().getTime() - time) > timeOut)) {
+      // 时长失效了
+      data =  '';
+      localStorage.removeItem(key);
+    } else {
+      data = data.value;
+    }
+  }
+  return data;
 }
 
 /**
@@ -698,4 +717,14 @@ export function addDomChildChange (dom, cbk) {
   };
 
   mo.observe(dom, option);
+}
+
+/**
+* 判断参数是否为空， []|{}|''|null|undefined 都为空
+* @param {Object} obj -  参数
+*/
+export function isEmpty (obj) {
+  var objstr = JSON.stringify(obj);
+  
+  return typeof obj === 'undefined' || obj === null || obj === '' || objstr === '{}' || objstr === '[]';
 }
