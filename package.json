@@ -1,6 +1,6 @@
 {
   "name": "web-js-tool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "常用工具类汇总",
   "main": "libs/tool.js",
   "files": [

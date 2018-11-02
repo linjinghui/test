@@ -726,5 +726,5 @@ export function addDomChildChange (dom, cbk) {
 export function isEmpty (obj) {
   var objstr = JSON.stringify(obj);
   
-  return typeof obj === 'undefined' || obj === null || obj === '' || objstr === '{}' || objstr === '[]';
+  return typeof obj === 'undefined' || obj === null || obj === '' || objstr === '{}';
 }
