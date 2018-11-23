@@ -660,7 +660,7 @@ export function formatUrl (url, paramObj) {
 *计算dom元素是否在可见范围之内
 */
 export function isVisible (dom, parantDom) {
-  let result = '';
+  var result = '';
 
   if (dom && parantDom) {
     result = !(parantDom.scrollTop >= (dom.offsetTop + dom.offsetHeight) || (parantDom.scrollTop + parantDom.offsetHeight) <= (dom.offsetTop + dom.offsetHeight));

@@ -2,7 +2,7 @@
 export default function (opt) {
   // "ws://"+location.host+"/cfws/conference/";
   // "wss://47.93.80.37:8050/module-conference/conference/";
-  let option = Object.assign({
+  var option = Object.assign({
     url: '',
     onOpen: function () {},
     onMessage: function () {},
@@ -10,7 +10,7 @@ export default function (opt) {
     onClose: function () {},
     sendMessage: function () {}
   }, opt);
-  let ws = connectWs(url);
+  var ws = connectWs(url);
 
   if (!url) {
     return '';
