@@ -682,7 +682,7 @@ export function isNull (data) {
 * 数组中2个元素位置对调
 */
 export function arrSwap (arr, index1, index2) {
-  return arr.splice(index1, 1, ...arr.splice(index2, 1, arr[index1]));
+  return arr.splice(index1, 1, arr.splice(index2, 1, arr[index1]));
 }
 
 /**
