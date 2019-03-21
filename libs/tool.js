@@ -517,6 +517,15 @@ export function isChinese (str) {
 }
 
 /**
+* 密码校验, 最少6位，包括至少1个数字，1个大写字母，1个小写字母，1个特殊字符
+*/
+export function checkPassword (str) {
+  var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+
+  return reg.test(str);
+}
+
+/**
 * 清除所有选中状态
 */
 export function clearAllSeletion () {
