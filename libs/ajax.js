@@ -6,7 +6,7 @@ export function ajax () {
     async: arguments[0].async || 'true',
     data: arguments[0].data || null,
     dataType: arguments[0].dataType || 'text',
-    contentType: arguments[0].contentType || 'application/x-www-form-urlencoded',
+    headers: arguments[0].headers || {},
     beforeSend: arguments[0].beforeSend || function () {},
     success: arguments[0].success || function () {},
     error: arguments[0].error || function () {},
@@ -16,6 +16,8 @@ export function ajax () {
   if (ajaxData.type.toLowerCase() === 'get' && ajaxData.data) {
     ajaxData.url += '?' + convertData(ajaxData.data);
   }
+  // 处理请求头
+  ajaxData.headers['Content-Type'] = ajaxData.headers['Content-Type'] || 'application/x-www-form-urlencoded';
   var timer = '';
   var xhr = createxmlHttpRequest();
   // 处理超时
@@ -26,7 +28,9 @@ export function ajax () {
   }
   xhr.responseType = ajaxData.dataType;
   xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);
-  xhr.setRequestHeader('Content-Type', ajaxData.contentType);
+  for (var key in ajaxData.headers) {
+    xhr.setRequestHeader(key, ajaxData.headers[key]);
+  }
   ajaxData.beforeSend(xhr);
   xhr.send(convertData(ajaxData.data));
   xhr.onreadystatechange = function () {
@@ -39,11 +43,11 @@ export function ajax () {
         } catch (error) {
           result = xhr.response;
         }
+        ajaxData.complete();
         ajaxData.success(result);
-        ajaxData.complete()
       } else {
-        ajaxData.error(xhr.status)
-        ajaxData.complete()
+        ajaxData.complete();
+        ajaxData.error(xhr.status);
       }
     }
   }

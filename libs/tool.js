@@ -758,3 +758,54 @@ export function isEmpty (obj) {
   
   return typeof obj === 'undefined' || obj === null || obj === '' || objstr === '{}';
 }
+
+/**
+* 判断节点是否含有指定class
+* @param {Object} obj -  dom对象
+*/
+export function hasClass (obj, cls) {
+  // 获取 class 内容
+  var objClass = obj.className;
+  // 通过split空字符将cls转换成数组.
+  var objClassLst = objClass.split(/\s+/);
+  var x = 0;
+  for(x in objClassLst) {
+    // 循环数组, 判断是否包含cls
+    if(objClassLst[x] === cls) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+* 删除节点 class
+* @param {Object} obj -  dom对象
+*/
+export function removeClass (obj, cls) {
+  // 获取 class 内容, 并在首尾各加一个空格. ex) 'abc    bcd' -> ' abc    bcd '
+  var objClass = ' ' + obj.className + ' ';
+  // 将多余的空字符替换成一个空格. ex) ' abc    bcd ' -> ' abc bcd '
+  objClass = objClass.replace(/(\s+)/gi, ' ');
+  // 在原来的 class 替换掉首尾加了空格的 class. ex) ' abc bcd ' -> 'bcd '
+  var removed = objClass.replace(' ' + cls + ' ', ' ');
+  // 去掉首尾空格. ex) 'bcd ' -> 'bcd'
+  removed = removed.replace(/(^\s+)|(\s+$)/g, '');
+  // 替换原来的 class.
+  obj.className = removed;
+}
+
+/**
+* 添加节点class
+* @param {Object} obj -  dom对象
+*/
+export function addClass (obj, cls) {
+  // 获取 class 内容.
+  var objClass = obj.className;
+  // 判断获取到的 class 是否为空, 如果不为空在前面加个'空格'.
+  var blank = (objClass != '') ? ' ' : '';
+  // 组合原来的 class 和需要添加的 class.
+  var added = objClass + blank + cls;
+  // 替换原来的 class.
+  obj.className = added;
+}
