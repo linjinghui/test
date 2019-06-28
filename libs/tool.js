@@ -838,3 +838,14 @@ export function setCookie (cname, cvalue, exdays) {
   var expires = "expires="+ d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 } 
+
+/**
+* 获取某月总天数
+*/
+export function getMonthAllDays (year, month) {
+  var d = new Date();
+  d.setFullYear(year || new Date().getFullYear());
+  d.setMonth(month || new Date().getMonth() + 1);
+  d.setDate(0);
+  return d.getDate();
+}
