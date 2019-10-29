@@ -1,112 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 <body>
-    <button onclick="selectElement()">select</button>
-    <p id="p1">asdas拉萨点解啊死了的空间啊的啊三季度拉开节点</p>
-<script type="text/javascript">
-    // alert(getRandomColor());
-    // alert(isEmail('http://'));
-    function isEmail (str) {
-      var reg = "^(http|https)://[\\S]+$";
-      return new RegExp(reg).test(str);
-    }
+  <script>
+    var a = [{
+      "id": "0000",
+      "text": "R1",
+      "children": [{
+        "id": "8978",
+        "text": "Aad",
+        "children": [{
+            "id": "2312",
+            "text": "adaada",
+            "children": [{
+                "id": "5154",
+                "text": "asdsa"
+            }]
+        }, {
+            "id": "4544",
+            "text": "afasf",
+            "children": [{
+                "id": "5236",
+                "text": "afasf"
+            }, {
+                "id": "2328",
+                "text": "afasf"
+            }]
+        }]
+    }, {
+        "id": "7867",
+        "text": "R2",
+        "children": [{
+            "id": "8767",
+            "text": "afasf",
+            "children": [{
+                "id": "2016",
+                "text": "afafa"
+            }, {
+                "id": "2017",
+                "text": "afasd"
+            }]
+        }, {
+            "id": "7657",
+            "text": "h",
+            "children": [{
+                "id": "7867",
+                "text": "afras"
+            }]
+        }]
+    }]
+    }];  
 
-setTimeout(function () {
-    clearAllSeletion();
-}, 3000);
-    /**
- * 清除所有选中状态
- */
-function clearAllSeletion () {
-    if ("getSelection" in window) {
-        window.getSelection().removeAllRanges();
-    } else {
-        document.selection.empty();
-    }
-}
+    function getCurrentPart (keyVal, items) {
+      var result;
+      var keys = Object.keys(keyVal);
 
-function selectElement(){
-    var target = document.getElementById('p1');
-        if (document.selection && target) {
-            var range = document.body.createTextRange();
-            range.moveToElementText(target);
-            range.select();
-        } else if (window.getSelection && target) {
-            var range = document.createRange();
-            range.selectNode(target);
-            var selection = window.getSelection();
-            selection.setAnchorNode = null;
-            selection.removeAllRanges();
-            selection.addRange(range);
+      for (var i in items) {
+        if (result) {
+          break;
         }
+        let item = items[i];
+        let check = true;
+        
+        for (var index in keys) {
+          var key = keys[index];
+          if (item[key] !== keyVal[key]) {
+            check = false;
+            break;
+          }
+        }
+        
+        if (check) {
+          result = item;
+          break;
+        } else if (item.children) {
+          result = getCurrentPart.call(this, keyVal, item.children);
+        }
+      }
+      return result;
     }
 
-function cutName(name){
-    name = name.replace(/[\d()（）._-]*/ig,'');
-    return (name.substr(name.length - 2 , 2));
-}
-function getRandomColor(){
-  return  '#' + (function (color) {
-    return (color +=  '0123456789abcdef'[Math.floor(Math.random()*15)]) && (color.length == 6) ? color : arguments.callee(color);
-  })('');
-}
-
-// alert(parseFileSize(1113024, 'KB', 2));
-/* 容量单位转换
- * size:容量大小
- * initUnit:初始单位
- * decimals:保留小数点位数
- * targetUnit:转换后的单位*/
-function parseFileSize(size, initUnit, decimals, targetUnit) {
-    size = parseInt(size);
-    var units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
-    var initUnitIndex = units.indexOf(initUnit);
-    while(size>=1024){
-        size = size / 1024;
-        ++initUnitIndex;
-        if(units[initUnitIndex]==targetUnit)break;
-    }
-    return (size.toFixed(decimals)+" "+units[initUnitIndex]);
-}
-// getImageSourceSize('https://images2018.cnblogs.com/news/24442/201804/24442-20180402101833163-1165053275.jpg', function (data) {
-//     alert(JSON.stringify(data));
-// });
-function getImageSourceSize (imgeUrl, callback) {
-  if (imgeUrl) {
-    var img = new Image();
-
-    img.src = imgeUrl;
-    img.onload = function () {
-      callback({
-        'width': img.width,
-        'height': img.height
-      });
-    };
-  }
-}
-
-alert(getFileSuffix('adasd.exe'));
-function getFileSuffix (fileName) {
-  var result = '';
-
-  if (fileName) {
-    var suffixes = ['folder', 'txt', 'exe', 'dll', 'jpg', 'gif', 'bmp', 'png', 'rar', 'zip', 'iso', 'doc', 'xls', 'ppt', 'docx', 'xlsx', 'pptx', 'mp3', 'wav', 'mid', 'wmv', 'wma', 'avi', 'mpg', 'mkv', 'rmv', 'mp4', 'htm', 'html', 'pdf'];
-    var suffix = (fileName.split('.').length === 1) ? 'folder' : (fileName.split('.')[fileName.split('.').length - 1]);
-
-    suffix = suffix.toLowerCase();
-    var a = suffixes.indexOf(suffix);
-
-    if(a >= 0) {
-      result = suffix;
-    } else {
-      result = 'other';
-    }
-  }
-  return result;
-}
-</script>
+    var xx = getCurrentPart({id: "2312"}, a);
+    console.log(xx);
+  </script>
 </body>
 </html>

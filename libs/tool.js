@@ -849,3 +849,54 @@ export function getMonthAllDays (year, month) {
   d.setDate(0);
   return d.getDate();
 }
+
+export function getParents (el, parentSelector) {
+  if (parentSelector === undefined) {
+    parentSelector = document;
+  }
+  var parents = [];
+  var p = el.parentNode;
+
+  while (p !== parentSelector) {
+    var o = p;
+    parents.push(o);
+    p = o.parentNode;
+  }
+  parents.push(parentSelector);
+  return parents;
+}
+
+// 树形数组，查找指定对象
+export function findwhere (keyVal, items) {
+  var result;
+  var keys = Object.keys(keyVal);
+
+  for (var i in items) {
+    if (result) {
+      break;
+    }
+    let item = items[i];
+    let check = true;
+    
+    for (var index in keys) {
+      var key = keys[index];
+      if (item[key] !== keyVal[key]) {
+        check = false;
+        break;
+      }
+    }
+    
+    if (check) {
+      result = item;
+      break;
+    } else if (item.children) {
+      result = findwhere.call(this, keyVal, item.children);
+    }
+  }
+  return result;
+}
+
+// 免费API - 获取QQ头像
+export function getQqAvatar (account) {
+  return 'http://q2.qlogo.cn/headimg_dl?dst_uin=' + account + '&spec=100';
+}
